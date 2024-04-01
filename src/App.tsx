@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import { Button } from './components/Button/Button';
+import { GameBoard } from './components/GameBoard/GameBoard';
 
 import './App.css';
 
 const App = () => {
-  return (
-  <div className="App">
+  const [gameStatus, setGameStatus] = useState(false);
 
-  </div>
+  const getGameStatus = (value: boolean) => {
+    setGameStatus(value);
+  };
+
+  return (
+    <div className="App">
+      <GameBoard gameStatus={gameStatus} onGameStart={getGameStatus}/>
+      {!gameStatus && <Button onGameStart={getGameStatus} />}
+    </div>
   );
 };
 
