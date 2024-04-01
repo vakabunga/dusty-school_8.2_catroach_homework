@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 import { cnGameBoard } from './GameBoard.classname';
 
@@ -11,9 +11,11 @@ import './GameBoard.css';
 
 const COCKROACH_NUMBER = 10;
 
+const cockroachImages = [Cocroach_theme_1, Cocroach_theme_2, Cocroach_theme_3];
+
 type GameBoardProps = {
-  gameStatus: boolean;
-  onGameStart: (value: boolean) => void;
+  cockroachesList: cockroachesType;
+  onChange: (value: cockroachesType) => void;
 };
 
 type cockroachesType = {
@@ -24,8 +26,6 @@ type cockroachesType = {
     left: string;
   };
 }[];
-
-const cockroachImages = [Cocroach_theme_1, Cocroach_theme_2, Cocroach_theme_3];
 
 const getCockroachesList = () => {
   const cockroaches: cockroachesType = [];
@@ -39,28 +39,25 @@ const getCockroachesList = () => {
         left: Math.floor(Math.random() * 470) + 'px',
       },
     });
-  };
+  }
   return cockroaches;
 };
 
-const GameBoard: FC<GameBoardProps> = ({ gameStatus, onGameStart }) => {
-  const [cockroachesLeft, setCockroachesLeft] = useState<cockroachesType>(getCockroachesList());
-
-  if ([...cockroachesLeft].length === 0 && gameStatus) {
-    setCockroachesLeft(getCockroachesList());
-    onGameStart(false);
-  }
+const GameBoard: FC<GameBoardProps> = ({ cockroachesList, onChange }) => {
+  // if (cockroachesList.length === 0) {
+  //   onChange([]);
+  //   return;
+  // }
 
   const handleGetKillCockroach = (index: number) => {
     return () => {
-      setCockroachesLeft((prev) => prev.filter((element) => element.id !== index));
+      onChange((prev) => prev.filter((element) => element.id !== index));
     };
   };
 
   return (
     <div className={cnGameBoard()}>
-      {gameStatus &&
-        cockroachesLeft.map((element) => (
+      {cockroachesList.map((element) => (
           <CockroachImage
             key={element.id}
             imageUrl={element.imageUrl}
@@ -72,4 +69,5 @@ const GameBoard: FC<GameBoardProps> = ({ gameStatus, onGameStart }) => {
   );
 };
 
-export { GameBoard };
+export { GameBoard, getCockroachesList };
+export type { cockroachesType };

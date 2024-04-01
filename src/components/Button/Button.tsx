@@ -3,18 +3,20 @@ import React, { FC } from 'react';
 import { cnButton } from './Button.classname';
 
 import './Button.css';
+import { getCockroachesList } from '../GameBoard/GameBoard';
+import type { cockroachesType } from '../GameBoard/GameBoard';
 
 type ButtonProps = {
-  onGameStart: (value: boolean) => void;
+  onChange: (value: cockroachesType) => void;
 };
 
-const Button: FC<ButtonProps> = ({ onGameStart }) => {
+const Button: FC<ButtonProps> = ({ onChange }) => {
   const handleStartGame = () => {
-    onGameStart(true);
+    onChange(getCockroachesList());
   };
 
   return (
-    <button className={cnButton()} onClick={handleStartGame} >
+    <button className={cnButton()} onClick={handleStartGame}>
       Начать игру
     </button>
   );
