@@ -1,0 +1,10 @@
+.GameBoard {
+  height: 500px;
+  width: 500px;
+
+  border: 1px solid #dc143c;
+
+  margin: 4px auto;
+
+  position: relative;
+}
